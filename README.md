@@ -1,11 +1,10 @@
 # ticketing-microservices-docker-kubernetes 
 
     A Production-Ready NodeJs application designed with Microservices Architecture
-and deployed using Docker and Kubernetes
+    and deployed using Docker and Kubernetes
 
-    This application is a ticketing system that allows users upload event tickets<br/>
-for sale, and other users/customers and place orders and purchase such tickets<br/>
-Payment integration using Stripe<br/>
+    This application is a ticketing system that allows users upload event tickets for sale, and other users/customers and place orders and purchase such tickets
+Payment integration using Stripe
 
 ### Technologies & Architecture
 
