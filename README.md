@@ -4,7 +4,8 @@
     and deployed using Docker and Kubernetes
 
     This application is a ticketing system that allows users upload event tickets for sale, 
-    and other users/customers and place orders and purchase such tickets Payment integration using Stripe
+    and other users/customers and place orders and purchase such tickets 
+    Payment integration using Stripe
 
 ### Technologies & Architecture
 
