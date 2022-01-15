@@ -2,6 +2,7 @@ import express from 'express';
 import 'express-async-errors';//makes sure we don't have to call next() 
 //in error handler when throwing errors in async functions
 import { json } from 'body-parser';
+import mongoose from 'mongoose';
 
 import { currentUserRouter } from "./routes/current-user";
 import { signinRouter } from "./routes/signin";
@@ -24,6 +25,18 @@ app.all('*', async () => {
 
 app.use(errorHandler);
 
-app.listen(3000, () => {
-    console.log('Listening at port 3000!');
-});
+const start = async () => {
+    try {
+        await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
+        console.log("Connected to MongoDB");
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+    app.listen(3000, () => {
+        console.log('Listening at port 3000!');
+    });
+}
+
+start();
