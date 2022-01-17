@@ -18,7 +18,7 @@ app.set('trust proxy', true);//because traffic is been proxied to our app via
 //ok to trust traffic from the proxy
 app.use(json());
 app.use(
-    cookieSession({
+    cookieSession({//this method sets the req.session property
         signed: false,//disable encryption, because json is already encrypted
         secure: true//allows cookies to be used only on https connection
     })

@@ -27,7 +27,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-});
+},
+{
+    toJSON: {
+        transform(doc,ret){
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.password;
+            delete ret.__v;
+        }
+    }
+}
+);
 
 //the .pre is a middleware function in mongoose that executes the function 
 // to the right, before the one to the left
