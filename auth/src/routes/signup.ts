@@ -23,7 +23,6 @@ async (req: Request, res: Response) => {
 
     const user = User.build({ email, password });
     await user.save();
-    console.log("New user created");
 
     // Generate JWT
     const userJwt = jwt.sign({
