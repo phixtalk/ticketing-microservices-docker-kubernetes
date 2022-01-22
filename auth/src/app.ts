@@ -3,13 +3,12 @@ import 'express-async-errors';//makes sure we don't have to call next()
 //in error handler when throwing errors in async functions
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
+import { errorHandler, NotFoundError } from "@csticket/common";
 
 import { currentUserRouter } from "./routes/current-user";
 import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
-import { errorHandler } from "./middlewares/error-handler";
-import { NotFoundError } from "./errors/not-found-error";
 
 const app = express();
 app.set('trust proxy', true);//because traffic is been proxied to our app via
