@@ -41,7 +41,8 @@ const userSchema = new mongoose.Schema({
 );
 
 //the .pre is a middleware function in mongoose that executes the function 
-// to the right, before the one to the left
+// to the right, before the one to the left. So basically the function
+// to the right is called before saving a document
 userSchema.pre('save', async function(done){
     if (this.isModified('password')) {
         const hashed = await Password.toHash(this.get('password'));
