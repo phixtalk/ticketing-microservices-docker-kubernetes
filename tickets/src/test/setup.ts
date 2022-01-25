@@ -46,7 +46,7 @@ available globally for testing
 global.signin = () => {
     //Build a jwt payload. { id, email }
     const payload = {
-        id: '19189n23923',
+        id: new mongoose.Types.ObjectId().toHexString(),
         email: 'test@mail.com'
     };
 
