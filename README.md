@@ -9,7 +9,7 @@
 
 ### Technologies & Architecture
 
-- #### Architecture: Microservices
+- #### Architecture: Microservices with Typescript
       auth service
       ticket service
       orders service
@@ -19,4 +19,6 @@
 - #### Frontend Client: NextJs
 - #### Event bus Service: NATS Streaming Server
 - #### CI/CD: Github Actions
+- #### TDD: Test First Pattern
+- #### Concurrency: Record Versioning
 
