@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { validateRequest, NotAuthorizedError, NotFoundError, requireAuth } from "@csticket/common";
 import { Ticket } from "../models/ticket";
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher";
+import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -26,6 +28,14 @@ async (req: Request, res: Response) => {
         price: req.body.price
     });
     await ticket.save();
+
+    //publish this event to every other services in the cluster
+    new TicketUpdatedPublisher(natsWrapper.client).publish({
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId
+    });
     
     res.send(ticket);
 });
