@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@csticket/common';
+import { TicketDoc } from "./ticket";
+
+export { OrderStatus };
 
 // An interface that describes the required properties to create an order
 interface OrderAttrs {
