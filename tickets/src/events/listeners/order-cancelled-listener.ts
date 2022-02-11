@@ -1,17 +1,13 @@
-import { Listener, OrderCreatedEvent, Subjects } from "@csticket/common";
+import { Listener, OrderCancelledEvent, Subjects } from "@csticket/common";
 import { Message } from "node-nats-streaming";
 import { Ticket } from "../../models/ticket";
 import { TicketUpdatedPublisher } from "../publishers/ticket-updated-publisher";
 import { queueGroupName } from "./queue-group-name";
 
-// When an order is made for the ticket, the ticket service receives the
-// event notification and then locks the ticket, so that no edits or update
-// can be made to the ticket again - eg changing its price etc - until
-// the order is either paid for or cancelled
-export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
-    readonly subject = Subjects.OrderCreated;
+export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
+    readonly subject = Subjects.OrderCancelled;
     queueGroupName = queueGroupName;
-    async onMessage(data: OrderCreatedEvent['data'], msg: Message) {
+    async onMessage(data: OrderCancelledEvent['data'], msg: Message) {
         // Find the ticket that the order is reserving
         const ticket = await Ticket.findById(data.ticket.id);
 
@@ -20,8 +16,8 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
             throw new Error('Ticket not found');
         }
 
-        // Mark the ticket as being reserved by setting its orderId property
-        ticket.set({ orderId: data.id });
+        // Mark the ticket as cancelled by setting its orderId to undefined
+        ticket.set({ orderId: undefined });
 
         // Save the ticket
         await ticket.save();
