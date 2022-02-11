@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { OrderStatus } from '@csticket/common';
 import { TicketDoc } from "./ticket";
 
@@ -18,6 +19,7 @@ interface OrderDoc extends mongoose.Document {
     status: OrderStatus;
     expiresAt: Date;
     ticket: TicketDoc;
+    version: number;
 }
 
 // An interface that describes the properties an Order Model has
@@ -53,6 +55,11 @@ const orderSchema = new mongoose.Schema({
     }
 }
 );
+
+// using the updateIfCurrentPlugin, we configure mongodb to track the version
+// of all the documents using a property named **version**
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 
 //the .statics method is used to dynamically add methods to mongoose model
 orderSchema.statics.build = (attrs: OrderAttrs) => {
