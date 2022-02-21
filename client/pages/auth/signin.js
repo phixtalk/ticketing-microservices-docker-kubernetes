@@ -22,7 +22,7 @@ export default () => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="container">
+    <form onSubmit={onSubmit}>
       <h1>Sign In</h1>
       <div className="form-group">
         <label>Email Address</label>
