@@ -1,7 +1,7 @@
 name: deploy-auth
 
 on:
-# runs this workflow whenever we merge/push PR to master branch
+# runs this workflow whenever we merge/push PR to main branch
   push:
     branches:
       - main
@@ -14,6 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+# uses the actions/checkout@v2 image as a base point. image contains docker
       - uses: actions/checkout@v2
       - run: cd auth && docker build -t chrisoft/auth .
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
@@ -21,6 +22,7 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       - run: docker push chrisoft/auth
+# uses digitalocean/action-doctl@v2 which is digital-ocean kubectl wrapper 
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
