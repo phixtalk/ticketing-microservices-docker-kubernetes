@@ -1,0 +1,23 @@
+name: deploy-auth
+
+on:
+# runs this workflow whenever we merge/push PR to master branch
+  push:
+    branches:
+      - master
+# and runs only there is a change in the auth directory
+    paths:
+      - 'auth/**'
+      
+# jobs to run
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd auth && docker build -t chrisoft/auth .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker push chrisoft/auth
