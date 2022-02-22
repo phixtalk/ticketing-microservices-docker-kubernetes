@@ -4,7 +4,7 @@ on:
 # runs this workflow whenever we merge/push PR to master branch
   push:
     branches:
-      - master
+      - main
 # and runs only there is a change in the auth directory
     paths:
       - 'auth/**'
