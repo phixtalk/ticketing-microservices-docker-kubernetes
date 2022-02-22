@@ -1,0 +1,22 @@
+name: deploy-manifests
+
+on:
+# runs this workflow whenever we merge/push PR to master branch
+  push:
+    branches:
+      - main
+# and runs only there is a change in the infra directory
+    paths:
+      - 'infra/**'
+      
+# jobs to run
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save ticketing
+      - run: kubectl apply -f infra/k8s
